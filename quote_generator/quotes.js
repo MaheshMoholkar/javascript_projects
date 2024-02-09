@@ -3,14 +3,24 @@ const quoteText = document.getElementById("quote");
 const authorText = document.getElementById("author");
 const twitterBtn = document.getElementById("twitter");
 const newQuoteBtn = document.getElementById("new-quote");
-
+const loader = document.getElementById("loader");
 
 let quotes = [];
 
-console.log(authorText)
-console.log(quoteText)
+function loading(){
+    loader.hidden = false
+    quotecontainer.hidden = true
+}
+
+function complete(){
+    if(!loader.hidden){
+        quotecontainer.hidden = false
+        loader.hidden = true
+    }
+}
 
 function showQuote() {
+    loading();
     let index = Math.floor(Math.random() * Math.floor(quotes.length));
     const quote = quotes[index];
 
@@ -25,8 +35,9 @@ function showQuote() {
     } else {
         quoteText.classList.remove("long-quote");
     }
-
+    
     quoteText.textContent = quote.text;
+    complete();
 }
 
 async function getQuotes() {
